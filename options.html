@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ResizeIT 2 Options</title>
+  <style type="text/css">
+    html,
+    body {
+      margin: 0;
+    }
+
+    body {
+      font: message-box;
+      -moz-user-select: none;
+    }
+
+    input[type="number"] {
+      width: calc(1em * 5);
+    }
+
+    .key {
+      display: inline-block;
+      border: 2px outset black;
+      padding: 2px;
+      background: lightgray;
+      border-radius: 2px;
+      min-width: 20px;
+      min-height: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th colspan="2">Size</th>
+        <th colspan="3">Position</th>
+      </tr>
+      <tr>
+        <th><span class="key">Alt</span> +</th>
+        <th>Width</th>
+        <th>Height</th>
+        <th>Enable</th>
+        <th>Left</th>
+        <th>Top</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="key">1</span></td>
+        <td><input type="number" id="preset-1-width" min="0" required></td>
+        <td><input type="number" id="preset-1-height" min="0" required></td>
+        <td><input type="checkbox" id="preset-1-pos"></td>
+        <td><input type="number" id="preset-1-left" min="0" required></td>
+        <td><input type="number" id="preset-1-top" min="0" required></td>
+        <td><button id="preset-1-current">Use current</button></td>
+      </tr>
+      <tr>
+        <td><span class="key">2</span></td>
+        <td><input type="number" id="preset-2-width" min="0" required></td>
+        <td><input type="number" id="preset-2-height" min="0" required></td>
+        <td><input type="checkbox" id="preset-2-pos"></td>
+        <td><input type="number" id="preset-2-left" min="0" required></td>
+        <td><input type="number" id="preset-2-top" min="0" required></td>
+        <td><button id="preset-2-current">Use current</button></td>
+      </tr>
+      <tr>
+        <td><span class="key">3</span></td>
+        <td><input type="number" id="preset-3-width" min="0" required></td>
+        <td><input type="number" id="preset-3-height" min="0" required></td>
+        <td><input type="checkbox" id="preset-3-pos"></td>
+        <td><input type="number" id="preset-3-left" min="0" required></td>
+        <td><input type="number" id="preset-3-top" min="0" required></td>
+        <td><button id="preset-3-current">Use current</button></td>
+      </tr>
+      <tr>
+        <td><span class="key">4</span></td>
+        <td><input type="number" id="preset-4-width" min="0" required></td>
+        <td><input type="number" id="preset-4-height" min="0" required></td>
+        <td><input type="checkbox" id="preset-4-pos"></td>
+        <td><input type="number" id="preset-4-left" min="0" required></td>
+        <td><input type="number" id="preset-4-top" min="0" required></td>
+        <td><button id="preset-4-current">Use current</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script type="text/javascript" src="options.js"></script>
+</body>
+</html>
