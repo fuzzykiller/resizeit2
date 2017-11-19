@@ -1,4 +1,4 @@
-export interface IPreset {
+interface IPreset {
     width: number;
     height: number;
     x: number;
@@ -6,16 +6,16 @@ export interface IPreset {
     restorePosition: boolean;
 }
 
-export interface IPresets {
+interface IPresets {
     "preset-1": IPreset;
     "preset-2": IPreset;
     "preset-3": IPreset;
     "preset-4": IPreset;
 }
 
-export type PresetName = keyof IPresets;
+type PresetName = keyof IPresets;
 
-export interface IWindowUpdateInfo {
+interface IWindowUpdateInfo {
     width: number;
     height: number;
     left?: number;

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IPresets, PresetName, IWindowUpdateInfo } from "./contracts";
+/// <reference path="./contracts.d.ts" />
 
 const defaultSettings = {
   "preset-1": {
