@@ -72,6 +72,11 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
   });
 }
 
+if (navigator.platform.indexOf("Mac") !== -1)
+{
+  document.getElementById("modifier-key")!.textContent = "ctrl";
+}
+
 getPresets().then(presets => {
   for (let i = 0; i <= 4; i++) {
     const presetName = presetNames[i];
