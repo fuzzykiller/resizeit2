@@ -13,3 +13,7 @@ This extension is written using TypeScript. To get started, run `npm install` or
 To build and check for type errors, use `npm run build` or `yarn run build` (`yarn build` should work, too).
 
 To pack the extension, use `npm run pack` or `yarn run pack`. This command requires a UNIX-style `zip` command to be present in `$PATH`.
+
+## Notes
+
+This extension is using `browser.storage.local`. Why? Because you may be using Firefox on systems with different monitor configurations. As such, synchronizing the settings is not appropriate.
