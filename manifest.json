@@ -6,6 +6,11 @@
 
   "version": "1.0",
 
+  "icons": {
+    "48": "logo.png",
+    "96": "logo@2x.png"
+  },
+
   "background": {
     "scripts": [
       "main.js"
