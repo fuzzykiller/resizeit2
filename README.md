@@ -12,7 +12,7 @@ This extension is written using TypeScript. To get started, run `npm install` or
 
 To build and check for type errors, use `npm run build`, `yarn run build` or `yarn build`.
 
-To pack the extension, use `npm run pack` or `yarn run pack` (`yarn pack` does something different). This command requires a UNIX-style `zip` command to be present in `$PATH`. On Windows, you could use Git Bash.
+To pack the extension, use `npm run pack` or `yarn run pack` (`yarn pack` does something different). This command requires a UNIX-style `zip` command to be present in `$PATH`. On Windows, you could use Cygwin.
 
 ## Notes
 
