@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IPresets, PresetName, IWindowUpdateInfo } from "./contracts";
+
 const defaultSettings = {
   "preset-1": {
     "width": 800,
@@ -45,35 +47,50 @@ const defaultSettings = {
   }
 };
 
+// Set default presets
 browser.storage.local.get("presets").then(result => {
   if (result.presets) return;
   
   browser.storage.local.set({ "presets": JSON.stringify(defaultSettings) });
 });
 
-function handleCommand(command) {
-  browser.storage.local.get("presets").then(result => {
-    const presets = JSON.parse(result.presets);
-    const preset = presets[command];
-    if (!preset) throw new Error("Couldn't get preset");
-    
-    const newState = {
-      "width": preset.width,
-      "height": preset.height
-    };
-    
-    if (preset.restorePosition) {
-      newState.left = preset.x;
-      newState.top = preset.y;
-    }
-    
-    return newState;
-  }).then(newState => {
-    if (!newState) return;
+// Handle user command
+function handleCommand(command: string) {
+  browser.storage.local.get("presets")
+    .then(x => getNewState(command as PresetName, x))
+    .then(newState => 
+      browser.windows.getCurrent()
+        .then(w => updateWindow(w, newState)));
+}
 
-    browser.windows.getCurrent().then(currentWindow => 
-    browser.windows.update(currentWindow.id, newState));
-  });
+function getNewState(presetName: PresetName, settings: browser.storage.StorageObject) {
+  if (!settings.presets) {
+    return undefined;
+  }
+
+  const presets = JSON.parse(settings.presets as string) as IPresets;
+  const preset = presets[presetName];
+
+  if (!preset) return undefined;
+  
+  const newState: IWindowUpdateInfo = {
+    "width": preset.width,
+    "height": preset.height
+  };
+  
+  if (preset.restorePosition) {
+    newState.left = preset.x;
+    newState.top = preset.y;
+  }
+  
+  return newState;
+}
+
+function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateInfo){
+  if (!window.id) return;
+  if (!newState) return;
+
+  browser.windows.update(window.id, newState);
 }
 
 browser.commands.onCommand.addListener(handleCommand);

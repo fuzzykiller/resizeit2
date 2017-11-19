@@ -1,0 +1,24 @@
+{
+  "name": "resizeit2",
+  "version": "0.0.1",
+  "description": "ResizeIT rewritten in Web Extensions",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "pack": "zip resizeit2.zip LICENSE main.js manifest.json options.html options.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuzzykiller/resizeit2.git"
+  },
+  "author": "Daniel Betz",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/fuzzykiller/resizeit2/issues"
+  },
+  "homepage": "https://github.com/fuzzykiller/resizeit2#readme",
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "web-ext-types": "^1.1.1"
+  }
+}

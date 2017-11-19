@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "none",
+    "lib": ["dom", "es2015"],
+    "downlevelIteration": true,
+    
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"]
+  },
+
+  "include": [
+    "main.ts",
+    "options.ts"
+  ]
+}

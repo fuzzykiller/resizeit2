@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-function e(id) {
-  return document.getElementById(id);
+import { IPresets, PresetName } from "./contracts";
+
+const presetNames: ReadonlyArray<PresetName> = ["preset-1", "preset-2", "preset-3", "preset-4"];
+
+function e(id: string) {
+  return document.getElementById(id) as HTMLInputElement;
 }
 
 function getPresets() {
@@ -25,14 +29,14 @@ function getPresets() {
       throw new Error("Couldn't get presets");
     }
 
-    return JSON.parse(result.presets);
+    return JSON.parse(result.presets as string) as IPresets;
   });
 }
 
 function saveChanges() {
   getPresets().then(presets => {
-    for (let i = 1; i <= 4; i++) {
-      const presetName = "preset-" + i;
+    for (let i = 0; i < 4; i++) {
+      const presetName = presetNames[i];
       const preset = presets[presetName];
 
       let elem;
@@ -57,27 +61,27 @@ function saveChanges() {
   });
 }
 
-function insertCurrentSizeAndPosition(presetName) {
+function insertCurrentSizeAndPosition(presetName: PresetName) {
   browser.windows.getCurrent().then(currentWindow => {
-    e(presetName + "-width").value = currentWindow.width;
-    e(presetName + "-height").value = currentWindow.height;
-    e(presetName + "-left").value = currentWindow.left;
-    e(presetName + "-top").value = currentWindow.top;
+    e(presetName + "-width").valueAsNumber = currentWindow.width || 1024;
+    e(presetName + "-height").valueAsNumber = currentWindow.height || 768;
+    e(presetName + "-left").valueAsNumber = currentWindow.left || 0;
+    e(presetName + "-top").valueAsNumber = currentWindow.top || 0;
 
     saveChanges();
   });
 }
 
 getPresets().then(presets => {
-  for (let i = 1; i <= 4; i++) {
-    const presetName = "preset-" + i;
+  for (let i = 0; i <= 4; i++) {
+    const presetName = presetNames[i];
     const preset = presets[presetName];
-    e(presetName + "-width").value = preset.width;
-    e(presetName + "-height").value = preset.height;
+    e(presetName + "-width").valueAsNumber = preset.width;
+    e(presetName + "-height").valueAsNumber = preset.height;
     e(presetName + "-pos").checked = preset.restorePosition;
-    e(presetName + "-left").value = preset.x;
+    e(presetName + "-left").valueAsNumber = preset.x;
     e(presetName + "-left").disabled = !preset.restorePosition;
-    e(presetName + "-top").value = preset.y;
+    e(presetName + "-top").valueAsNumber = preset.y;
     e(presetName + "-top").disabled = !preset.restorePosition;
 
     e(presetName + "-width").addEventListener("change", saveChanges);
