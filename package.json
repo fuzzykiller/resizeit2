@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "tsc",
-    "pack": "zip resizeit2.zip LICENSE main.js manifest.json options.html options.js"
+    "pack": "zip resizeit2.zip LICENSE main.js manifest.json options.html options.js logo.png logo@2x.png"
   },
   "repository": {
     "type": "git",
