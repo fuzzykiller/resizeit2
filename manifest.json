@@ -20,6 +20,7 @@
       },
       "description": "Switch to preset 1"
     },
+
     "preset-2": {
       "suggested_key": {
         "default": "Alt+2",
@@ -27,6 +28,7 @@
       },
       "description": "Switch to preset 2"
     },
+
     "preset-3": {
       "suggested_key": {
         "default": "Alt+3",
@@ -34,6 +36,7 @@
       },
       "description": "Switch to preset 3"
     },
+    
     "preset-4": {
       "suggested_key": {
         "default": "Alt+4",

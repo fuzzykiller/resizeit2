@@ -10,9 +10,9 @@ I’ll try to make it compatible with Chrome, too. Eventually.
 
 This extension is written using TypeScript. To get started, run `npm install` or `yarn`.
 
-To build and check for type errors, use `npm run build` or `yarn run build` (`yarn build` should work, too).
+To build and check for type errors, use `npm run build`, `yarn run build` or `yarn build`.
 
-To pack the extension, use `npm run pack` or `yarn run pack`. This command requires a UNIX-style `zip` command to be present in `$PATH`.
+To pack the extension, use `npm run pack` or `yarn run pack` (`yarn pack` does something different). This command requires a UNIX-style `zip` command to be present in `$PATH`. On Windows, you could use Git Bash.
 
 ## Notes
 
