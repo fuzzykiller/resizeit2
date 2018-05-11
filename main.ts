@@ -63,6 +63,15 @@ function handleCommand(command: string) {
         .then(w => updateWindow(w, newState)));
 }
 
+// Handle message from popup
+function handleMessage(message: any): void {
+  if (typeof message !== "string") {
+    return;
+  }
+
+  handleCommand(message);
+}
+
 function getNewState(presetName: PresetName, settings: browser.storage.StorageObject) {
   if (!settings.presets) {
     return undefined;
@@ -94,3 +103,4 @@ function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateIn
 }
 
 browser.commands.onCommand.addListener(handleCommand);
+browser.runtime.onMessage.addListener(handleMessage);

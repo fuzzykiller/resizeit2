@@ -63,6 +63,28 @@
     "page": "options/options.html"
   },
 
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "browser_action/icon-dark.png",
+      "32": "browser_action/icon-dark@2x.png"
+    },
+    "default_title": "ResizeIT 2",
+    "default_popup": "browser_action/popup.html",
+    "theme_icons": [
+      {
+        "dark": "browser_action/icon-dark.png",
+        "light": "browser_action/icon-light.png",
+        "size": 16
+      },
+      {
+        "dark": "browser_action/icon-dark@2x.png",
+        "light": "browser_action/icon-light@2x.png",
+        "size": 32
+      }
+    ]
+  },
+
   "applications": {
     "gecko": {
       "id": "resizeit-2@futuretech.in"

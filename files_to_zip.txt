@@ -1,0 +1,13 @@
+./browser_action/icon-dark.png
+./browser_action/icon-dark@2x.png
+./browser_action/icon-light.png
+./browser_action/icon-light@2x.png
+./browser_action/popup.html
+./browser_action/popup.js
+./options/options.html
+./options/options.js
+./LICENSE
+./logo.png
+./logo@2x.png
+./main.js
+./manifest.json
