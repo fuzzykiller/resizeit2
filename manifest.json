@@ -21,7 +21,8 @@
     "preset-1": {
       "suggested_key": {
         "default": "Alt+1",
-        "mac": "MacCtrl+1"
+        "mac": "MacCtrl+1",
+        "linux": "Ctrl+1"
       },
       "description": "Switch to preset 1"
     },
@@ -29,7 +30,8 @@
     "preset-2": {
       "suggested_key": {
         "default": "Alt+2",
-        "mac": "MacCtrl+2"
+        "mac": "MacCtrl+2",
+        "linux": "Ctrl+2"
       },
       "description": "Switch to preset 2"
     },
@@ -37,7 +39,8 @@
     "preset-3": {
       "suggested_key": {
         "default": "Alt+3",
-        "mac": "MacCtrl+3"
+        "mac": "MacCtrl+3",
+        "linux": "Ctrl+3"
       },
       "description": "Switch to preset 3"
     },
@@ -45,7 +48,8 @@
     "preset-4": {
       "suggested_key": {
         "default": "Alt+4",
-        "mac": "MacCtrl+4"
+        "mac": "MacCtrl+4",
+        "linux": "Ctrl+4"
       },
       "description": "Switch to preset 4"
     }
@@ -56,7 +60,7 @@
   ],
 
   "options_ui": {
-    "page": "options.html"
+    "page": "options/options.html"
   },
 
   "applications": {

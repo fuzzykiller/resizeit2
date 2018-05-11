@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference path="./contracts.d.ts" />
+/// <reference path="../contracts.d.ts" />
 
 const presetNames: ReadonlyArray<PresetName> = ["preset-1", "preset-2", "preset-3", "preset-4"];
 
@@ -75,6 +75,10 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
 if (navigator.platform.indexOf("Mac") !== -1)
 {
   document.getElementById("modifier-key")!.textContent = "ctrl";
+}
+
+if (navigator.platform.indexOf("Linux") !== -1) {
+  document.getElementById("modifier-key")!.textContent = "Ctrl";
 }
 
 getPresets().then(presets => {

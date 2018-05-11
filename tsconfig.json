@@ -20,6 +20,6 @@
 
   "include": [
     "main.ts",
-    "options.ts"
+    "options/options.ts"
   ]
 }
