@@ -90,7 +90,7 @@ function onKeyDown(cmd: browser.commands.Command, ev: KeyboardEvent) {
   }
   
   if (ev.ctrlKey) {
-    keyboardShorcut = "Ctrl+" + keyboardShortcut;
+    keyboardShortcut = "Ctrl+" + keyboardShortcut;
   }
   
   e(presetName + "-key").value = keyboardShortcut;
