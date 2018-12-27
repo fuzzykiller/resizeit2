@@ -72,13 +72,29 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
   });
 }
 
-if (navigator.platform.indexOf("Mac") !== -1)
-{
-  document.getElementById("modifier-key")!.textContent = "ctrl";
-}
-
-if (navigator.platform.indexOf("Linux") !== -1) {
-  document.getElementById("modifier-key")!.textContent = "Ctrl";
+function onKeyDown(cmd: browser.commands.Command, ev: KeyboardEvent) {
+  const presetName = cmd.name;
+  
+  let keyboardShortcut = ev.char;
+  
+  if (ev.shiftKey) {
+    keyboardShortcut = "Shift+" + keyboardShortcut;
+  }
+  
+  if (ev.metaKey) {
+    keyboardShortcut = "Meta+" + keyboardShortcut;
+  }
+  
+  if (ev.altKey) {
+    keyboardShortcut = "Alt+" + keyboardShortcut;
+  }
+  
+  if (ev.ctrlKey) {
+    keyboardShorcut = "Ctrl+" + keyboardShortcut;
+  }
+  
+  e(presetName + "-key").value = keyboardShortcut;
+  browser.commands.update({ ...cmd, shortcut: keyboardShortcut });
 }
 
 getPresets().then(presets => {
@@ -102,3 +118,18 @@ getPresets().then(presets => {
     e(presetName + "-current").addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
   }
 });
+
+browser.commands.getAll().then(cmds => {
+  for (let i = 0; i < cmds.length; i++) {
+    const cmd = cmds[i];
+    
+    if (presetNames.indexOf(cmd.name) === -1) {
+      continue;
+    }
+    
+    const presetName = cmd.name;
+    
+    e(presetName + "-key").value = cmd.shortcut;
+    e(presetName + "-key").addEventListener("keydown", ev => onKeyDown(cmd, ev));
+  }
+});  
