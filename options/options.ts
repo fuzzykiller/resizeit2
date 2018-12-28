@@ -16,7 +16,18 @@ limitations under the License.
 
 /// <reference path="../contracts.d.ts" />
 
+enum Platform {
+  Other,
+  Mac
+}
+
 const presetNames: ReadonlyArray<PresetName> = ["preset-1", "preset-2", "preset-3", "preset-4"];
+const platform = navigator.platform.indexOf("Mac") !== -1 ? Platform.Mac : Platform.Other;
+
+const ctrlModifier = platform === Platform.Mac ? "MacCtrl+" : "Ctrl+";
+const altModifier = "Alt+";
+const metaModifier = platform === Platform.Mac ? "Ctrl+" : "Meta+";
+const shiftModifier = "Shift+";
 
 function e(id: string) {
   return document.getElementById(id) as HTMLInputElement;
@@ -78,19 +89,19 @@ function onKeyDown(cmd: browser.commands.Command, ev: KeyboardEvent) {
   let keyboardShortcut = ev.char;
   
   if (ev.shiftKey) {
-    keyboardShortcut = "Shift+" + keyboardShortcut;
+    keyboardShortcut = shiftModifier + keyboardShortcut;
   }
   
   if (ev.metaKey) {
-    keyboardShortcut = "Meta+" + keyboardShortcut;
+    keyboardShortcut = metaModifier + keyboardShortcut;
   }
   
   if (ev.altKey) {
-    keyboardShortcut = "Alt+" + keyboardShortcut;
+    keyboardShortcut = altModifier + keyboardShortcut;
   }
   
   if (ev.ctrlKey) {
-    keyboardShortcut = "Ctrl+" + keyboardShortcut;
+    keyboardShortcut = ctrlModifier + keyboardShortcut;
   }
   
   e(presetName + "-key").value = keyboardShortcut;
@@ -132,4 +143,4 @@ browser.commands.getAll().then(cmds => {
     e(presetName + "-key").value = cmd.shortcut;
     e(presetName + "-key").addEventListener("keydown", ev => onKeyDown(cmd, ev));
   }
-});  
+});
