@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 /// <reference path="../contracts.d.ts" />
+/// <reference path="../web-ext-types.d.ts" />
 
 enum Platform {
   Other,
@@ -108,6 +109,11 @@ function onKeyDown(cmd: browser.commands.Command, ev: KeyboardEvent) {
   browser.commands.update({ ...cmd, shortcut: keyboardShortcut });
 }
 
+function isPresetName(s: string | undefined): s is PresetName {
+  if (s === undefined) return false;
+  return s === "preset-1" || s === "preset-2" || s === "preset-3" || s === "preset-4";
+}
+
 getPresets().then(presets => {
   for (let i = 0; i <= 4; i++) {
     const presetName = presetNames[i];
@@ -134,13 +140,13 @@ browser.commands.getAll().then(cmds => {
   for (let i = 0; i < cmds.length; i++) {
     const cmd = cmds[i];
     
-    if (presetNames.indexOf(cmd.name) === -1) {
+    if (!isPresetName(cmd.name)) {
       continue;
     }
     
     const presetName = cmd.name;
     
-    e(presetName + "-key").value = cmd.shortcut;
+    e(presetName + "-key").value = cmd.shortcut || "";
     e(presetName + "-key").addEventListener("keydown", ev => onKeyDown(cmd, ev));
   }
 });
