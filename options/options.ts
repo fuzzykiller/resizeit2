@@ -85,26 +85,29 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
 }
 
 function onKeyDown(cmd: browser.commands.Command, ev: KeyboardEvent) {
+  ev.preventDefault();
+
   const presetName = cmd.name;
-  
-  let keyboardShortcut = ev.char;
-  
+  let keyboardShortcut = ev.key;
+
+  // TODO: Don't react to modifier keys
+
   if (ev.shiftKey) {
     keyboardShortcut = shiftModifier + keyboardShortcut;
   }
-  
+
   if (ev.metaKey) {
     keyboardShortcut = metaModifier + keyboardShortcut;
   }
-  
+
   if (ev.altKey) {
     keyboardShortcut = altModifier + keyboardShortcut;
   }
-  
+
   if (ev.ctrlKey) {
     keyboardShortcut = ctrlModifier + keyboardShortcut;
   }
-  
+
   e(presetName + "-key").value = keyboardShortcut;
   browser.commands.update({ ...cmd, shortcut: keyboardShortcut });
 }
@@ -139,13 +142,13 @@ getPresets().then(presets => {
 browser.commands.getAll().then(cmds => {
   for (let i = 0; i < cmds.length; i++) {
     const cmd = cmds[i];
-    
+
     if (!isPresetName(cmd.name)) {
       continue;
     }
-    
+
     const presetName = cmd.name;
-    
+
     e(presetName + "-key").value = cmd.shortcut || "";
     e(presetName + "-key").addEventListener("keydown", ev => onKeyDown(cmd, ev));
   }
