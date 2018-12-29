@@ -6,6 +6,7 @@
 ./browser_action/popup.js
 ./options/options.html
 ./options/options.js
+./node_modules/bootstrap/dist/css/bootstrap.css
 ./LICENSE
 ./logo.png
 ./logo@2x.png

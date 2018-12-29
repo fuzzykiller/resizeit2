@@ -85,12 +85,16 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
 }
 
 function onKeyDown(cmd: browser.commands.Command, ev: KeyboardEvent) {
+  if (ev.key === "Shift" || ev.key === "Control"
+    || ev.key === "Alt" || ev.key === "AltGraph"
+    || ev.key === "Tab") {
+    return;
+  }
+
   ev.preventDefault();
 
   const presetName = cmd.name;
   let keyboardShortcut = ev.key;
-
-  // TODO: Don't react to modifier keys
 
   if (ev.shiftKey) {
     keyboardShortcut = shiftModifier + keyboardShortcut;
@@ -108,8 +112,16 @@ function onKeyDown(cmd: browser.commands.Command, ev: KeyboardEvent) {
     keyboardShortcut = ctrlModifier + keyboardShortcut;
   }
 
-  e(presetName + "-key").value = keyboardShortcut;
-  browser.commands.update({ ...cmd, shortcut: keyboardShortcut });
+  const elem = e(presetName + "-key");
+  elem.value = keyboardShortcut;
+  elem.classList.remove("is-valid", "is-invalid");
+
+  try {
+    browser.commands.update({ ...cmd, shortcut: keyboardShortcut });
+    elem.classList.add("is-valid");
+  } catch {
+    elem.classList.add("is-invalid");
+  }
 }
 
 function isPresetName(s: string | undefined): s is PresetName {
@@ -149,7 +161,9 @@ browser.commands.getAll().then(cmds => {
 
     const presetName = cmd.name;
 
-    e(presetName + "-key").value = cmd.shortcut || "";
-    e(presetName + "-key").addEventListener("keydown", ev => onKeyDown(cmd, ev));
+    const elem = e(presetName + "-key");
+    elem.value = cmd.shortcut || "";
+    elem.addEventListener("keydown", ev => onKeyDown(cmd, ev));
+    elem.addEventListener("blur", () => elem.classList.remove("is-valid", "is-invalid"));
   }
 });

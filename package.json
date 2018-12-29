@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/fuzzykiller/resizeit2#readme",
   "devDependencies": {
+    "bootstrap": "^4.2.1",
     "typescript": "~2.8.0",
     "web-ext-types": "^3.1.0"
   }

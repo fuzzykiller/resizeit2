@@ -4,34 +4,27 @@
 <head>
   <meta charset="utf-8">
   <title>ResizeIT 2 Options</title>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
   <style type="text/css">
-    html,
-    body {
-      margin: 0;
-    }
-
-    body {
-      font: message-box;
-      -moz-user-select: none;
-    }
-
-    input[type="number"] {
-      width: calc(1em * 5);
-    }
-
-    .key {
-      display: inline-block;
-      border: 2px outset black;
-      padding: 2px;
-      background: lightgray;
-      border-radius: 2px;
-      min-width: 20px;
-      min-height: 20px;
-      text-align: center;
+    html {
+      font-size: 14px;
+      margin: 0 5px;
     }
 
     th.top-header {
       border-bottom: 1px solid black;
+    }
+
+    th, td {
+      padding-right: .375rem;
+    }
+
+    input[type="number"] {
+      width: calc(1rem * 5);
+    }
+
+    input[type="text"] {
+      width: 10rem;
     }
   </style>
 </head>
@@ -55,44 +48,45 @@
     </thead>
     <tbody>
       <tr>
-        <td><input type="text" id="preset-1-key" value="Alt+1" title="Press keys" readonly></td>
-        <td><input type="number" id="preset-1-width" min="0" required></td>
-        <td><input type="number" id="preset-1-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-1-pos"></td>
-        <td><input type="number" id="preset-1-left" required></td>
-        <td><input type="number" id="preset-1-top" required></td>
-        <td><button id="preset-1-current">Use current</button></td>
+        <td><input class="form-control form-control-sm" type="text" id="preset-1-key" value="Alt+1" title="Press keys" readonly></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-1-width" min="0" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-1-height" min="0" required></td>
+        <td><input class="form-check-inline" type="checkbox" id="preset-1-pos"></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-1-left" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-1-top" required></td>
+        <td><button class="btn btn-sm btn-secondary" id="preset-1-current">Use current</button></td>
       </tr>
       <tr>
-        <td><input type="text" id="preset-2-key" value="Alt+2" title="Press keys" readonly></td>
-        <td><input type="number" id="preset-2-width" min="0" required></td>
-        <td><input type="number" id="preset-2-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-2-pos"></td>
-        <td><input type="number" id="preset-2-left" required></td>
-        <td><input type="number" id="preset-2-top" required></td>
-        <td><button id="preset-2-current">Use current</button></td>
+        <td><input class="form-control form-control-sm" type="text" id="preset-2-key" value="Alt+2" title="Press keys" readonly></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-2-width" min="0" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-2-height" min="0" required></td>
+        <td><input class="form-check-inline" type="checkbox" id="preset-2-pos"></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-2-left" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-2-top" required></td>
+        <td><button class="btn btn-sm btn-secondary" id="preset-2-current">Use current</button></td>
       </tr>
       <tr>
-        <td><input type="text" id="preset-3-key" value="Alt+3" title="Press keys" readonly></td>
-        <td><input type="number" id="preset-3-width" min="0" required></td>
-        <td><input type="number" id="preset-3-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-3-pos"></td>
-        <td><input type="number" id="preset-3-left" required></td>
-        <td><input type="number" id="preset-3-top" required></td>
-        <td><button id="preset-3-current">Use current</button></td>
+        <td><input class="form-control form-control-sm" type="text" id="preset-3-key" value="Alt+3" title="Press keys" readonly></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-3-width" min="0" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-3-height" min="0" required></td>
+        <td><input class="form-check-inline" type="checkbox" id="preset-3-pos"></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-3-left" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-3-top" required></td>
+        <td><button class="btn btn-sm btn-secondary" id="preset-3-current">Use current</button></td>
       </tr>
       <tr>
-        <td><input type="text" id="preset-4-key" value="Alt+4" title="Press keys" readonly></td>
-        <td><input type="number" id="preset-4-width" min="0" required></td>
-        <td><input type="number" id="preset-4-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-4-pos"></td>
-        <td><input type="number" id="preset-4-left" required></td>
-        <td><input type="number" id="preset-4-top" required></td>
-        <td><button id="preset-4-current">Use current</button></td>
+        <td><input class="form-control form-control-sm" type="text" id="preset-4-key" value="Alt+4" title="Press keys" readonly></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-4-width" min="0" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-4-height" min="0" required></td>
+        <td><input class="form-check-inline" type="checkbox" id="preset-4-pos"></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-4-left" required></td>
+        <td><input class="form-control form-control-sm" type="number" id="preset-4-top" required></td>
+        <td><button class="btn btn-sm btn-secondary" id="preset-4-current">Use current</button></td>
       </tr>
     </tbody>
   </table>
 
   <script type="text/javascript" src="options.js"></script>
 </body>
+
 </html>
