@@ -86,6 +86,6 @@ getPresets().then(presets => {
     e(presetName + "-left").addEventListener("change", saveChanges);
     e(presetName + "-top").addEventListener("change", saveChanges);
 
-    e(presetName + "-current").addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
+    e<HTMLButtonElement>(presetName + "-current").addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
   }
 });

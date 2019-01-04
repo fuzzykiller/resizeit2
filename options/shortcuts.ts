@@ -80,6 +80,10 @@ function decodeShortcut(shortcut: string | undefined): [string, string, string] 
   throw new Error("Invalid shortcut value");
 }
 
+function resetShortcut(cmdName: string) {
+  browser.commands.reset(cmdName).then(() => location.reload());
+}
+
 function saveShortcut(cmd: browser.commands.Command) {
   const key1Select = e<HTMLSelectElement>(cmd.name + "-key-1");
   const key2Select = e<HTMLSelectElement>(cmd.name + "-key-2");
@@ -125,10 +129,10 @@ function addOptions(e: HTMLSelectElement, keyInfos: IKeyInfo[]) {
   }
 }
 
-function updateSelection(
-  key1Select: HTMLSelectElement, key2Select: HTMLSelectElement, key3Select: HTMLSelectElement) {
+function updateSelection(key1Select: HTMLSelectElement, key2Select: HTMLSelectElement, key3Select: HTMLSelectElement) {
   const previousKey2Value = key2Select.value;
   const previousKey3Value = key3Select.value;
+  
   if (key1Select.value) {
     clearOptions(key2Select);
     addOptions(key2Select, key2Values.filter(x => x.key !== key1Select.value));
@@ -154,6 +158,8 @@ browser.commands.getAll().then(cmds => {
     if (!isPresetName(cmd.name)) {
       continue;
     }
+
+    const cmdName = cmd.name;
 
     const [key1, key2, key3] = decodeShortcut(cmd.shortcut);
 
@@ -181,5 +187,7 @@ browser.commands.getAll().then(cmds => {
     });
 
     key3Select.addEventListener("change", () => saveShortcut(cmd));
+
+    e<HTMLButtonElement>(cmd.name + "-key-reset").addEventListener("click", () => resetShortcut(cmdName));
   }
 });
