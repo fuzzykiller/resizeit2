@@ -1,6 +1,5 @@
 resizeit2.zip
 resizeit2-source.zip
 node_modules/
-main.js
-options.js
+*.js
 npm-debug.log
