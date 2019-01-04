@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Daniel Betz
+Copyright 2019 Daniel Betz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,12 +15,8 @@ limitations under the License.
 */
 
 /// <reference path="../contracts.d.ts" />
-
-const presetNames: ReadonlyArray<PresetName> = ["preset-1", "preset-2", "preset-3", "preset-4"];
-
-function e(id: string) {
-  return document.getElementById(id) as HTMLInputElement;
-}
+/// <reference path="../web-ext-types.d.ts" />
+/// <reference path="common.ts" />
 
 function getPresets() {
   return browser.storage.local.get("presets").then(result => {
@@ -39,7 +35,7 @@ function saveChanges() {
       const presetName = presetNames[i];
       const preset = presets[presetName];
 
-      let elem;
+      let elem: HTMLInputElement;
       elem = e(presetName + "-width");
       if (elem.validity.valid) preset.width = elem.valueAsNumber;
 
@@ -70,15 +66,6 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
 
     saveChanges();
   });
-}
-
-if (navigator.platform.indexOf("Mac") !== -1)
-{
-  document.getElementById("modifier-key")!.textContent = "ctrl";
-}
-
-if (navigator.platform.indexOf("Linux") !== -1) {
-  document.getElementById("modifier-key")!.textContent = "Ctrl";
 }
 
 getPresets().then(presets => {

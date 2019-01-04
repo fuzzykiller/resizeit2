@@ -4,95 +4,243 @@
 <head>
   <meta charset="utf-8">
   <title>ResizeIT 2 Options</title>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
   <style type="text/css">
-    html,
-    body {
-      margin: 0;
-    }
-
-    body {
-      font: message-box;
-      -moz-user-select: none;
-    }
-
-    input[type="number"] {
-      width: calc(1em * 5);
-    }
-
-    .key {
-      display: inline-block;
-      border: 2px outset black;
-      padding: 2px;
-      background: lightgray;
-      border-radius: 2px;
-      min-width: 20px;
-      min-height: 20px;
-      text-align: center;
+    html {
+      font-size: 14px;
+      margin: 0 5px;
     }
 
     th.top-header {
       border-bottom: 1px solid black;
     }
+
+    th,
+    td {
+      padding-right: .375rem;
+    }
+
+    input[type="number"] {
+      width: 5rem;
+    }
+
+    input[type="text"] {
+      width: 10rem;
+    }
+
+    .key-1-select {
+      width: 5em;
+    }
+
+    .key-2-select {
+      width: 5em;
+    }
+
+    .key-3-select {
+      width: 8em;
+    }
+
+    tr:not(.preset-top-row) td {
+      border: 0;
+    }
+
+    tr:not(.last-header-row) th {
+      border: 0;
+    }
+
+    tr.last-header-row th {
+      border-top: 0;
+    }
+
+    .table td.btn-cell {
+      vertical-align: middle;
+    }
+
+    .is-valid::after {
+      content: '✔';
+    }
+
+    .is-invalid::after {
+      content: '❌';
+    }
   </style>
 </head>
 
 <body>
-  <table>
+  <table class="table table-sm">
     <thead>
       <tr>
         <th></th>
-        <th colspan="2" class="top-header">Size</th>
-        <th colspan="3" class="top-header">Position</th>
+        <th colspan="4">Size: Width / Height</th>
       </tr>
-      <tr>
-        <th><span class="key" id="modifier-key">Alt</span> +</th>
-        <th>Width</th>
-        <th>Height</th>
-        <th>Enable</th>
-        <th>Left</th>
-        <th>Top</th>
+      <tr class="last-header-row">
+        <th>Shortcut</th>
+        <th colspan="4">Position: Enable / Left / Top</th>
       </tr>
     </thead>
     <tbody>
+      <!-- Preset 1-->
       <tr>
-        <td><span class="key">1</span></td>
-        <td><input type="number" id="preset-1-width" min="0" required></td>
-        <td><input type="number" id="preset-1-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-1-pos"></td>
-        <td><input type="number" id="preset-1-left" required></td>
-        <td><input type="number" id="preset-1-top" required></td>
-        <td><button id="preset-1-current">Use current</button></td>
+        <td>
+          <select class="custom-select custom-select-sm key-1-select" id="preset-1-key-1">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-2-select" id="preset-1-key-2">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-3-select" id="preset-1-key-3">
+            <option value=""></option>
+          </select>
+          <span id="preset-1-key-indicator"></span>
+        </td>
+        <td></td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-1-width" min="0" required title="Width">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-1-height" min="0" required title="Height">
+        </td>
+        <td rowspan="2" class="btn-cell">
+          <button class="btn btn-sm btn-secondary" id="preset-1-current" title="Use current size and position for this preset">Use
+            current</button>
+        </td>
       </tr>
       <tr>
-        <td><span class="key">2</span></td>
-        <td><input type="number" id="preset-2-width" min="0" required></td>
-        <td><input type="number" id="preset-2-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-2-pos"></td>
-        <td><input type="number" id="preset-2-left" required></td>
-        <td><input type="number" id="preset-2-top" required></td>
-        <td><button id="preset-2-current">Use current</button></td>
+        <td></td>
+        <td>
+          <input type="checkbox" id="preset-1-pos" title="Restore position when activating this preset">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-1-left" required title="Left">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-1-top" required title="Top">
+        </td>
+      </tr>
+
+      <!-- Preset 2 -->
+      <tr class="preset-top-row">
+        <td>
+          <select class="custom-select custom-select-sm key-1-select" id="preset-2-key-1">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-2-select" id="preset-2-key-2">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-3-select" id="preset-2-key-3">
+            <option value=""></option>
+          </select>
+          <span id="preset-2-key-indicator"></span>
+        </td>
+        <td></td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-2-width" min="0" required title="Width">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-2-height" min="0" required title="Height">
+        </td>
+        <td rowspan="2" class="btn-cell">
+          <button class="btn btn-sm btn-secondary" id="preset-2-current" title="Use current size and position for this preset">Use
+            current</button>
+        </td>
       </tr>
       <tr>
-        <td><span class="key">3</span></td>
-        <td><input type="number" id="preset-3-width" min="0" required></td>
-        <td><input type="number" id="preset-3-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-3-pos"></td>
-        <td><input type="number" id="preset-3-left" required></td>
-        <td><input type="number" id="preset-3-top" required></td>
-        <td><button id="preset-3-current">Use current</button></td>
+        <td></td>
+        <td>
+          <input type="checkbox" id="preset-2-pos" title="Restore position when activating this preset">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-2-left" required title="Left">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-2-top" required title="Top">
+        </td>
+      </tr>
+
+      <!-- Preset 3 -->
+      <tr class="preset-top-row">
+        <td>
+          <select class="custom-select custom-select-sm key-1-select" id="preset-3-key-1">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-2-select" id="preset-3-key-2">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-3-select" id="preset-3-key-3">
+            <option value=""></option>
+          </select>
+          <span id="preset-3-key-indicator"></span>
+        </td>
+        <td></td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-3-width" min="0" required title="Width">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-3-height" min="0" required title="Height">
+        </td>
+
+        <td rowspan="2" class="btn-cell">
+          <button class="btn btn-sm btn-secondary" id="preset-3-current" title="Use current size and position for this preset">Use
+            current</button>
+        </td>
       </tr>
       <tr>
-        <td><span class="key">4</span></td>
-        <td><input type="number" id="preset-4-width" min="0" required></td>
-        <td><input type="number" id="preset-4-height" min="0" required></td>
-        <td><input type="checkbox" id="preset-4-pos"></td>
-        <td><input type="number" id="preset-4-left" required></td>
-        <td><input type="number" id="preset-4-top" required></td>
-        <td><button id="preset-4-current">Use current</button></td>
+        <td></td>
+        <td>
+          <input type="checkbox" id="preset-3-pos" title="Restore position when activating this preset">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-3-left" required title="Left">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-3-top" required title="Top">
+        </td>
+      </tr>
+
+      <!-- Preset 4 -->
+      <tr class="preset-top-row">
+        <td>
+          <select class="custom-select custom-select-sm key-1-select" id="preset-4-key-1">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-2-select" id="preset-4-key-2">
+            <option value=""></option>
+          </select>
+          <select class="custom-select custom-select-sm key-3-select" id="preset-4-key-3">
+            <option value=""></option>
+          </select>
+          <span id="preset-4-key-indicator"></span>
+        </td>
+        <td></td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-4-width" min="0" required title="Width">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-4-height" min="0" required title="Height">
+        </td>
+        <td rowspan="2" class="btn-cell">
+          <button class="btn btn-sm btn-secondary" id="preset-4-current" title="Use current size and position for this preset">Use
+            current</button>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <input type="checkbox" id="preset-4-pos" title="Restore position when activating this preset">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-4-left" required title="Left">
+        </td>
+        <td>
+          <input class="form-control form-control-sm" type="number" id="preset-4-top" required title="Top">
+        </td>
       </tr>
     </tbody>
   </table>
 
+  <script type="text/javascript" src="common.js"></script>
   <script type="text/javascript" src="options.js"></script>
+  <script type="text/javascript" src="shortcuts.js"></script>
 </body>
+
 </html>

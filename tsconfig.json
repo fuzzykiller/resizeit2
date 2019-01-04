@@ -20,6 +20,8 @@
 
   "include": [
     "main.ts",
-    "options/options.ts"
+    "options/common.ts",
+    "options/options.ts",
+    "options/shortcuts.ts"
   ]
 }
