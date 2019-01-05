@@ -23,6 +23,9 @@ function e<TElement extends HTMLElement = HTMLInputElement>(id: string) {
 }
 
 function isPresetName(s: string | undefined): s is PresetName {
-  if (s === undefined) return false;
+  if (s === undefined) {
+    return false;
+  }
+
   return s === "preset-1" || s === "preset-2" || s === "preset-3" || s === "preset-4";
 }

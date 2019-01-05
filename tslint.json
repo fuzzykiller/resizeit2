@@ -1,0 +1,17 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "indent": [ true, "spaces", 2 ],
+        "linebreak-style": [true, "CRLF"],
+        "quotemark": [ true, "double" ],
+        "semicolon": [ true, "always" ],
+        "object-literal-sort-keys": false,
+        "no-reference": false,
+        "no-namespace": [true, "allow-declarations"]
+    },
+    "rulesDirectory": []
+}

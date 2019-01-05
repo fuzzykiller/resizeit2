@@ -37,7 +37,7 @@ const key3FunctionValues: ReadonlyArray<IKeyInfo> = [
   k("F1"), k("F2"), k("F3"),
   k("F4"), k("F5"), k("F6"),
   k("F7"), k("F8"), k("F9"),
-  k("F10"), k("F11"), k("F12")
+  k("F10"), k("F11"), k("F12"),
 ];
 
 const key3Values: ReadonlyArray<IKeyInfo> = [
@@ -70,7 +70,7 @@ const key3Values: ReadonlyArray<IKeyInfo> = [
   k("Up"),
   k("Down"),
   k("Left"),
-  k("Right")
+  k("Right"),
 ];
 
 function decodeShortcut(shortcut: string | undefined): [string, string, string] {
@@ -151,7 +151,7 @@ function updateSelection(key1Select: HTMLSelectElement, key2Select: HTMLSelectEl
   if (key1Select.value) {
     // First modifier selected: All values possible
     clearOptions(key2Select);
-    addOptions(key2Select, key2Values.filter(x => x.key !== key1Select.value));
+    addOptions(key2Select, key2Values.filter((x) => x.key !== key1Select.value));
 
     clearOptions(key3Select);
     addOptions(key3Select, key3Values);
@@ -168,10 +168,8 @@ function updateSelection(key1Select: HTMLSelectElement, key2Select: HTMLSelectEl
   key3Select.value = previousKey3Value;
 }
 
-browser.commands.getAll().then(cmds => {
-  for (let i = 0; i < cmds.length; i++) {
-    const cmd = cmds[i];
-
+browser.commands.getAll().then((cmds) => {
+  for (const cmd of cmds) {
     if (!isPresetName(cmd.name)) {
       continue;
     }

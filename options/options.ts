@@ -19,7 +19,7 @@ limitations under the License.
 /// <reference path="common.ts" />
 
 function getPresets() {
-  return browser.storage.local.get("presets").then(result => {
+  return browser.storage.local.get("presets").then((result) => {
     if (!result.presets) {
       location.reload();
       throw new Error("Couldn't get presets");
@@ -30,35 +30,43 @@ function getPresets() {
 }
 
 function saveChanges() {
-  getPresets().then(presets => {
+  getPresets().then((presets) => {
     for (let i = 0; i < 4; i++) {
       const presetName = presetNames[i];
       const preset = presets[presetName];
 
       let elem: HTMLInputElement;
       elem = e(presetName + "-width");
-      if (elem.validity.valid) preset.width = elem.valueAsNumber;
+      if (elem.validity.valid) {
+        preset.width = elem.valueAsNumber;
+      }
 
       elem = e(presetName + "-height");
-      if (elem.validity.valid) preset.height = elem.valueAsNumber;
+      if (elem.validity.valid) {
+        preset.height = elem.valueAsNumber;
+      }
 
       preset.restorePosition = e(presetName + "-pos").checked;
 
       elem = e(presetName + "-left");
       elem.disabled = !preset.restorePosition;
-      if (elem.validity.valid) preset.x = elem.valueAsNumber;
+      if (elem.validity.valid) {
+        preset.x = elem.valueAsNumber;
+      }
 
       elem = e(presetName + "-top");
       elem.disabled = !preset.restorePosition;
-      if (elem.validity.valid) preset.y = elem.valueAsNumber;
+      if (elem.validity.valid) {
+        preset.y = elem.valueAsNumber;
+      }
     }
 
-    browser.storage.local.set({ "presets": JSON.stringify(presets) });
+    browser.storage.local.set({ presets: JSON.stringify(presets) });
   });
 }
 
 function insertCurrentSizeAndPosition(presetName: PresetName) {
-  browser.windows.getCurrent().then(currentWindow => {
+  browser.windows.getCurrent().then((currentWindow) => {
     e(presetName + "-width").valueAsNumber = currentWindow.width || 1024;
     e(presetName + "-height").valueAsNumber = currentWindow.height || 768;
     e(presetName + "-left").valueAsNumber = currentWindow.left || 0;
@@ -68,7 +76,7 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
   });
 }
 
-getPresets().then(presets => {
+getPresets().then((presets) => {
   for (let i = 0; i <= 4; i++) {
     const presetName = presetNames[i];
     const preset = presets[presetName];
@@ -86,6 +94,7 @@ getPresets().then(presets => {
     e(presetName + "-left").addEventListener("change", saveChanges);
     e(presetName + "-top").addEventListener("change", saveChanges);
 
-    e<HTMLButtonElement>(presetName + "-current").addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
+    e<HTMLButtonElement>(presetName + "-current")
+      .addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
   }
 });

@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Daniel Betz
+Copyright 2019 Daniel Betz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,49 +18,51 @@ limitations under the License.
 
 const defaultSettings = {
   "preset-1": {
-    "width": 800,
-    "height": 600,
-    "x": 0,
-    "y": 0,
-    "restorePosition": false
+    width: 800,
+    height: 600,
+    x: 0,
+    y: 0,
+    restorePosition: false,
   },
   "preset-2": {
-    "width": 1024,
-    "height": 768,
-    "x": 0,
-    "y": 0,
-    "restorePosition": false
+    width: 1024,
+    height: 768,
+    x: 0,
+    y: 0,
+    restorePosition: false,
   },
   "preset-3": {
-    "width": 1280,
-    "height": 720,
-    "x": 0,
-    "y": 0,
-    "restorePosition": false
+    width: 1280,
+    height: 720,
+    x: 0,
+    y: 0,
+    restorePosition: false,
   },
   "preset-4": {
-    "width": 768,
-    "height": 1024,
-    "x": 0,
-    "y": 0,
-    "restorePosition": false
-  }
+    width: 768,
+    height: 1024,
+    x: 0,
+    y: 0,
+    restorePosition: false,
+  },
 };
 
 // Set default presets
-browser.storage.local.get("presets").then(result => {
-  if (result.presets) return;
-  
-  browser.storage.local.set({ "presets": JSON.stringify(defaultSettings) });
+browser.storage.local.get("presets").then((result) => {
+  if (result.presets) {
+    return;
+  }
+
+  browser.storage.local.set({ presets: JSON.stringify(defaultSettings) });
 });
 
 // Handle user command
 function handleCommand(command: string) {
   browser.storage.local.get("presets")
-    .then(x => getNewState(command as PresetName, x))
-    .then(newState => 
+    .then((x) => getNewState(command as PresetName, x))
+    .then((newState) =>
       browser.windows.getCurrent()
-        .then(w => updateWindow(w, newState)));
+        .then((w) => updateWindow(w, newState)));
 }
 
 // Handle message from popup
@@ -80,24 +82,27 @@ function getNewState(presetName: PresetName, settings: browser.storage.StorageOb
   const presets = JSON.parse(settings.presets as string) as IPresets;
   const preset = presets[presetName];
 
-  if (!preset) return undefined;
-  
+  if (!preset) {
+    return undefined;
+  }
+
   const newState: IWindowUpdateInfo = {
-    "width": preset.width,
-    "height": preset.height
+    width: preset.width,
+    height: preset.height,
   };
-  
+
   if (preset.restorePosition) {
     newState.left = preset.x;
     newState.top = preset.y;
   }
-  
+
   return newState;
 }
 
-function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateInfo){
-  if (!window.id) return;
-  if (!newState) return;
+function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateInfo) {
+  if (!window.id || !newState) {
+    return;
+  }
 
   browser.windows.update(window.id, newState);
 }
