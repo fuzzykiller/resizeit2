@@ -19,43 +19,58 @@ limitations under the License.
 /// <reference path="common.ts" />
 
 interface IKeyInfo {
-  key: string;
-  name: string;
+  readonly key: string;
+  readonly name: string;
+}
+
+function k(key: string, name?: string): IKeyInfo {
+  return { key, name: name || key };
 }
 
 const isMac = navigator.platform.indexOf("Mac") !== -1;
-const key1Values: IKeyInfo[] = isMac
-  ? [{ key: "MacCtrl", name: "ctrl" }, { key: "Alt", name: "alt" }, { key: "Ctrl", name: "cmd" }]
-  : [{ key: "Ctrl", name: "Ctrl" }, { key: "Alt", name: "Alt" }];
+const key1Values: ReadonlyArray<IKeyInfo> = isMac
+  ? [k("MacCtrl", "ctrl"), k("Alt", "alt"), k("Ctrl", "cmd")]
+  : [k("Ctrl"), k("Alt")];
 
-const key2Values: IKeyInfo[] = [...key1Values, { key: "Shift", name: isMac ? "shift" : "Shift" }];
-const key3FunctionValues: IKeyInfo[] = [
-  { key: "F1", name: "F1" }, { key: "F2", name: "F2" }, { key: "F3", name: "F3" },
-  { key: "F4", name: "F4" }, { key: "F5", name: "F5" }, { key: "F6", name: "F6" },
-  { key: "F7", name: "F7" }, { key: "F8", name: "F8" }, { key: "F9", name: "F9" },
-  { key: "F10", name: "F10" }, { key: "F11", name: "F11" }, { key: "F12", name: "F12" }
+const key2Values: ReadonlyArray<IKeyInfo> = [...key1Values, k("Shift", isMac ? "shift" : "Shift")];
+const key3FunctionValues: ReadonlyArray<IKeyInfo> = [
+  k("F1"), k("F2"), k("F3"),
+  k("F4"), k("F5"), k("F6"),
+  k("F7"), k("F8"), k("F9"),
+  k("F10"), k("F11"), k("F12")
 ];
 
-const key3Values: IKeyInfo[] = [
-  { key: "A", name: "A" }, { key: "B", name: "B" }, { key: "C", name: "C" },
-  { key: "D", name: "D" }, { key: "E", name: "E" }, { key: "F", name: "F" },
-  { key: "G", name: "G" }, { key: "H", name: "H" }, { key: "I", name: "I" },
-  { key: "J", name: "J" }, { key: "K", name: "K" }, { key: "L", name: "L" },
-  { key: "M", name: "M" }, { key: "N", name: "N" }, { key: "O", name: "O" },
-  { key: "P", name: "P" }, { key: "Q", name: "Q" }, { key: "R", name: "R" },
-  { key: "S", name: "S" }, { key: "T", name: "T" }, { key: "U", name: "U" },
-  { key: "V", name: "V" }, { key: "W", name: "W" }, { key: "X", name: "X" },
-  { key: "Y", name: "Y" }, { key: "Z", name: "Z" },
-  { key: "1", name: "1" }, { key: "2", name: "2" }, { key: "3", name: "3" },
-  { key: "4", name: "4" }, { key: "5", name: "5" }, { key: "6", name: "6" },
-  { key: "7", name: "7" }, { key: "8", name: "8" }, { key: "9", name: "9" },
-  { key: "0", name: "0" },
+const key3Values: ReadonlyArray<IKeyInfo> = [
+  k("A"), k("B"), k("C"),
+  k("D"), k("E"), k("F"),
+  k("G"), k("H"), k("I"),
+  k("J"), k("K"), k("L"),
+  k("M"), k("N"), k("O"),
+  k("P"), k("Q"), k("R"),
+  k("S"), k("T"), k("U"),
+  k("V"), k("W"), k("X"),
+  k("Y"), k("Z"),
+
+  k("1"), k("2"), k("3"),
+  k("4"), k("5"), k("6"),
+  k("7"), k("8"), k("9"),
+  k("0"),
+
   ...key3FunctionValues,
-  { key: "Comma", name: "," }, { key: "Period", name: "." }, { key: "Home", name: "Home" },
-  { key: "End", name: "End" }, { key: "PageUp", name: "Page Up" }, { key: "PageDown", name: "Page Down" },
-  { key: "Space", name: "Space" }, { key: "Insert", name: "Insert" }, { key: "Delete", name: "Delete" },
-  { key: "Up", name: "Up" }, { key: "Down", name: "Down" }, { key: "Left", name: "Left" },
-  { key: "Right", name: "Right" }
+
+  k("Comma", ","),
+  k("Period", "."),
+  k("Home"),
+  k("End"),
+  k("PageUp", "Page Up"),
+  k("PageDown", "Page Down"),
+  k("Space"),
+  k("Insert"),
+  k("Delete"),
+  k("Up"),
+  k("Down"),
+  k("Left"),
+  k("Right")
 ];
 
 function decodeShortcut(shortcut: string | undefined): [string, string, string] {
@@ -95,7 +110,7 @@ function saveShortcut(cmd: browser.commands.Command) {
     return;
   }
 
-  let shortcut = [key3Select.value];
+  const shortcut = [key3Select.value];
 
   if (key2Select.value) {
     shortcut.unshift(key2Select.value);
@@ -120,7 +135,7 @@ function clearOptions(e: HTMLSelectElement) {
   e.options.add(emptyOption);
 }
 
-function addOptions(e: HTMLSelectElement, keyInfos: IKeyInfo[]) {
+function addOptions(e: HTMLSelectElement, keyInfos: ReadonlyArray<IKeyInfo>) {
   for (const keyInfo of keyInfos) {
     const option = document.createElement("option");
     option.value = keyInfo.key;
@@ -132,14 +147,16 @@ function addOptions(e: HTMLSelectElement, keyInfos: IKeyInfo[]) {
 function updateSelection(key1Select: HTMLSelectElement, key2Select: HTMLSelectElement, key3Select: HTMLSelectElement) {
   const previousKey2Value = key2Select.value;
   const previousKey3Value = key3Select.value;
-  
+
   if (key1Select.value) {
+    // First modifier selected: All values possible
     clearOptions(key2Select);
     addOptions(key2Select, key2Values.filter(x => x.key !== key1Select.value));
 
     clearOptions(key3Select);
     addOptions(key3Select, key3Values);
   } else {
+    // First modifier empty: Only function keys valid
     clearOptions(key2Select);
 
     clearOptions(key3Select);
