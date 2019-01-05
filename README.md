@@ -1,6 +1,8 @@
 # resizeit2
 
-A rewrite (from scratch) of the [ResizeIT Firefox extension](https://addons.mozilla.org/firefox/addon/resizeit/). <s>It hasn’t been updated in years and is not compatible with Firefox 57+.</s>
+[![Build Status](https://travis-ci.org/fuzzykiller/resizeit2.svg?branch=master)](https://travis-ci.org/fuzzykiller/resizeit2)
+
+A rewrite (from scratch) of the [ResizeIT Firefox extension](https://addons.mozilla.org/firefox/addon/resizeit/). It wasn’t available as a Web Extension in the past.
 
 I think it’s a great tool, especially with frequently changing monitor setups.
 
@@ -8,11 +10,11 @@ I’ll try to make it compatible with Chrome, too. Eventually.
 
 ## Building
 
-This extension is written using TypeScript. To get started, run `npm install` or `yarn`.
+This extension is written using TypeScript. To get started, run `npm ci`.
 
-To build and check for type errors, use `npm run build`, `yarn run build` or `yarn build`.
+To lint and build, use `npm run lint` and `npm run build`, respectively.
 
-To pack the extension, use `npm run pack` or `yarn run pack` (`yarn pack` does something different). This command requires a UNIX-style `zip` command to be present in `$PATH`. On Windows, you could use Cygwin.
+To pack the extension, use `npm run pack`. This command requires a UNIX-style `zip` command to be present in `$PATH`. On Windows, you could use Cygwin or WSL.
 
 ## Notes
 
