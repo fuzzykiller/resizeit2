@@ -6,6 +6,12 @@ I think it’s a great tool, especially with frequently changing monitor setups.
 
 I’ll try to make it compatible with Chrome, too. Eventually.
 
+## About this branch (customizable-shortcuts)
+
+In this branch, I allow for customizable keyboard shortcuts. The user would focus a textbox and press the desired shortcut.
+
+Unfortunately, Javascript does not offer any method to reliably retrieve the unmodified key presses. As such, this method does not work.
+
 ## Building
 
 This extension is written using TypeScript. To get started, run `npm install` or `yarn`.
