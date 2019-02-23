@@ -1,5 +1,5 @@
 /**
- * Types that are missing from the NuGet packages
+ * Types that are missing from the NPM packages
  */
 
 declare namespace browser.commands {
