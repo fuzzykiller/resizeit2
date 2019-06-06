@@ -21,8 +21,8 @@
   "homepage": "https://github.com/fuzzykiller/resizeit2#readme",
   "devDependencies": {
     "bootstrap": "~4.3.1",
-    "tslint": "~5.12.1",
-    "typescript": "~3.3.3333",
+    "tslint": "~5.17.0",
+    "typescript": "~3.5.1",
     "web-ext-types": "~3.1.0"
   }
 }
