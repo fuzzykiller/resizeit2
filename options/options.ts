@@ -77,7 +77,7 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
 }
 
 getPresets().then((presets) => {
-  for (let i = 0; i <= 4; i++) {
+  for (let i = 0; i < 4; i++) {
     const presetName = presetNames[i];
     const preset = presets[presetName];
     e(presetName + "-width").valueAsNumber = preset.width;
