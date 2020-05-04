@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference path="../contracts.d.ts" />
 
-const presetNames: ReadonlyArray<PresetName> = ["preset-1", "preset-2", "preset-3", "preset-4"];
+const presetNames = ["preset-1", "preset-2", "preset-3", "preset-4"] as const;
 
 function e<TElement extends HTMLElement = HTMLInputElement>(id: string) {
   return document.getElementById(id) as TElement;
