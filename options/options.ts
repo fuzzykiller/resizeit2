@@ -54,6 +54,8 @@ function saveChanges() {
       if (elem.validity.valid) {
         preset.y = elem.valueAsNumber;
       }
+
+      preset.restoreOnStart = e(presetName + "-startup").checked;
     }
 
     return browser.storage.local.set({ [presetsKey]: JSON.stringify(presets) });
@@ -81,14 +83,18 @@ getPresets().then((presets) => {
     e(presetName + "-left").disabled = !preset.restorePosition;
     e(presetName + "-top").valueAsNumber = preset.y;
     e(presetName + "-top").disabled = !preset.restorePosition;
+    e(presetName + "-startup").checked = !!preset.restoreOnStart;
 
     e(presetName + "-width").addEventListener("change", saveChanges);
     e(presetName + "-height").addEventListener("change", saveChanges);
     e(presetName + "-pos").addEventListener("change", saveChanges);
     e(presetName + "-left").addEventListener("change", saveChanges);
     e(presetName + "-top").addEventListener("change", saveChanges);
+    e(presetName  + "-startup").addEventListener("change", saveChanges);
 
     e<HTMLButtonElement>(presetName + "-current")
       .addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
   }
+
+  e("startup-none").addEventListener("change", saveChanges);
 }, () => { /* ignore */ });

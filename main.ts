@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+const updatingKey = "updating";
+
 const defaultSettings: IPresets = {
   "preset-1": {
     width: 800,
@@ -75,6 +77,12 @@ function getNewState(presetName: string, settings: browser.storage.StorageObject
   const presets = JSON.parse(settings[presetsKey] as string) as IPresets;
   const preset = presets[presetName];
 
+  const newState = getWindowUpdateInfo(preset);
+
+  return newState;
+}
+
+function getWindowUpdateInfo(preset: IPreset) {
   const newState: IWindowUpdateInfo = {
     width: preset.width,
     height: preset.height,
@@ -96,16 +104,48 @@ function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateIn
   browser.windows.update(window.id, newState).catch(() => { /* ignore */ });
 }
 
+function handleUpdate() {
+  browser.storage.local.set({ updating: true }).then(() => {
+    browser.runtime.reload();
+  }).catch(() => { /* ignore */ });
+}
+
+function getStartupPreset(presets: IPresets) {
+  for (const presetName of presetNames) {
+    const preset = presets[presetName];
+    if (preset.restoreOnStart) {
+      return preset;
+    }
+  }
+
+  return;
+}
+
 // Initialize
 async function init() {
   browser.commands.onCommand.addListener(handleCommand);
   browser.runtime.onMessage.addListener(handleMessage);
+  browser.runtime.onUpdateAvailable.addListener(handleUpdate);
 
   const result = await browser.storage.local.get([presetsKey, updatingKey]);
   let savedPresets = result[presetsKey];
   if (typeof savedPresets !== "string") {
     savedPresets = JSON.stringify(defaultSettings);
     await browser.storage.local.set({ [presetsKey]: savedPresets });
+  }
+
+  await browser.storage.local.set({ [updatingKey]: false });
+  if (result[updatingKey] === true) {
+    return;
+  }
+
+  const presets = JSON.parse(savedPresets) as IPresets;
+  const startupPreset = getStartupPreset(presets);
+
+  if (startupPreset) {
+    const newState = getWindowUpdateInfo(startupPreset);
+    const window = await browser.windows.getCurrent();
+    updateWindow(window, newState);
   }
 }
 

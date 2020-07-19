@@ -4,6 +4,7 @@ interface IPreset {
     x: number;
     y: number;
     restorePosition: boolean;
+    restoreOnStart?: boolean;
 }
 
 interface IPresets {
