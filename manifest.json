@@ -85,9 +85,10 @@
     ]
   },
 
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
-      "id": "resizeit-2@futuretech.in"
+      "id": "resizeit-2@futuretech.in",
+      "strict_min_version": "52.0"
     }
   }
 }
