@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Daniel Betz
+Copyright 2020 Daniel Betz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,21 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-function getPresets() {
-  return browser.storage.local.get("presets").then((result) => {
-    if (!result.presets) {
-      location.reload();
-      throw new Error("Couldn't get presets");
-    }
-
-    return JSON.parse(result.presets as string) as IPresets;
-  });
+async function getPresets() {
+  const result = await browser.storage.local.get(presetsKey);
+  const savedPresets = result[presetsKey];
+  if (typeof savedPresets !== "string") {
+    location.reload();
+    throw new Error("Couldn't get presets");
+  }
+  
+  return JSON.parse(savedPresets) as IPresets;
 }
 
 function saveChanges() {
   getPresets().then((presets) => {
-    for (let i = 0; i < 4; i++) {
-      const presetName = presetNames[i];
+    for (const presetName of presetNames) {
       const preset = presets[presetName];
 
       let elem: HTMLInputElement;
@@ -57,7 +56,7 @@ function saveChanges() {
       }
     }
 
-    return browser.storage.local.set({ presets: JSON.stringify(presets) });
+    return browser.storage.local.set({ [presetsKey]: JSON.stringify(presets) });
   }, () => { /* ignore */ });
 }
 
@@ -73,8 +72,7 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
 }
 
 getPresets().then((presets) => {
-  for (let i = 0; i < 4; i++) {
-    const presetName = presetNames[i];
+  for (const presetName of presetNames) {
     const preset = presets[presetName];
     e(presetName + "-width").valueAsNumber = preset.width;
     e(presetName + "-height").valueAsNumber = preset.height;

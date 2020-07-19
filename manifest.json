@@ -13,6 +13,7 @@
 
   "background": {
     "scripts": [
+      "options/common.js",
       "main.js"
     ]
   },

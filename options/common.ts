@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Daniel Betz
+Copyright 2020 Daniel Betz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 const presetNames = ["preset-1", "preset-2", "preset-3", "preset-4"] as const;
+const presetsKey = "presets";
 
 function e<TElement extends HTMLElement = HTMLInputElement>(id: string) {
   return document.getElementById(id) as TElement;
 }
 
-function isPresetName(s: string | undefined): s is PresetName {
-  if (s === undefined) {
+function isPresetName(s: unknown): s is PresetName {
+  if (typeof s !== "string") {
     return false;
   }
 

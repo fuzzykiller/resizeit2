@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Daniel Betz
+Copyright 2020 Daniel Betz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -45,19 +45,10 @@ const defaultSettings: IPresets = {
   },
 };
 
-// Set default presets
-browser.storage.local.get("presets").then((result) => {
-  if (result.presets) {
-    return;
-  }
-
-  browser.storage.local.set({ presets: JSON.stringify(defaultSettings) }).catch(() => { /* ignore */ });
-}, () => { /* ignore */ });
-
 // Handle user command
 function handleCommand(command: string) {
-  browser.storage.local.get("presets")
-    .then((x) => getNewState(command as PresetName, x))
+  browser.storage.local.get(presetsKey)
+    .then((x) => getNewState(command, x))
     .then((newState) =>
       browser.windows.getCurrent()
         .then((w) => updateWindow(w, newState)), () => { /* ignore */ });
@@ -72,17 +63,17 @@ function handleMessage(message: unknown): void {
   handleCommand(message);
 }
 
-function getNewState(presetName: PresetName, settings: browser.storage.StorageObject) {
+function getNewState(presetName: string, settings: browser.storage.StorageObject) {
   if (!settings.presets) {
     return undefined;
   }
 
-  const presets = JSON.parse(settings.presets as string) as IPresets;
-  const preset = presets[presetName];
-
-  if (!preset) {
+  if (!isPresetName(presetName)) {
     return undefined;
   }
+
+  const presets = JSON.parse(settings[presetsKey] as string) as IPresets;
+  const preset = presets[presetName];
 
   const newState: IWindowUpdateInfo = {
     width: preset.width,
@@ -105,5 +96,17 @@ function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateIn
   browser.windows.update(window.id, newState).catch(() => { /* ignore */ });
 }
 
-browser.commands.onCommand.addListener(handleCommand);
-browser.runtime.onMessage.addListener(handleMessage);
+// Initialize
+async function init() {
+  browser.commands.onCommand.addListener(handleCommand);
+  browser.runtime.onMessage.addListener(handleMessage);
+
+  const result = await browser.storage.local.get([presetsKey, updatingKey]);
+  let savedPresets = result[presetsKey];
+  if (typeof savedPresets !== "string") {
+    savedPresets = JSON.stringify(defaultSettings);
+    await browser.storage.local.set({ [presetsKey]: savedPresets });
+  }
+}
+
+init().catch(() => { /* ignore */ });
