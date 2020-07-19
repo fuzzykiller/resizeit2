@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference path="../contracts.d.ts" />
-/// <reference path="../web-ext-types.d.ts" />
-/// <reference path="common.ts" />
-
 function getPresets() {
   return browser.storage.local.get("presets").then((result) => {
     if (!result.presets) {
@@ -61,8 +57,8 @@ function saveChanges() {
       }
     }
 
-    browser.storage.local.set({ presets: JSON.stringify(presets) });
-  });
+    return browser.storage.local.set({ presets: JSON.stringify(presets) });
+  }, () => { /* ignore */ });
 }
 
 function insertCurrentSizeAndPosition(presetName: PresetName) {
@@ -73,7 +69,7 @@ function insertCurrentSizeAndPosition(presetName: PresetName) {
     e(presetName + "-top").valueAsNumber = currentWindow.top || 0;
 
     saveChanges();
-  });
+  }, () => { /* ignore */ });
 }
 
 getPresets().then((presets) => {
@@ -97,4 +93,4 @@ getPresets().then((presets) => {
     e<HTMLButtonElement>(presetName + "-current")
       .addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
   }
-});
+}, () => { /* ignore */ });

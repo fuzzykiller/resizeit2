@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Daniel Betz
+Copyright 2020 Daniel Betz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ function onClick(ev: MouseEvent) {
   }
 
   browser.runtime.sendMessage(presetName)
-    .then(() => window.close());
+    .then(() => window.close(), () => { /* ignore */ });
 }
 
 document.addEventListener("click", onClick);

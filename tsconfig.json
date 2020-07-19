@@ -19,6 +19,8 @@
   },
 
   "include": [
+    "web-ext-types.d.ts",
+    "contracts.d.ts",
     "main.ts",
     "options/common.ts",
     "options/options.ts",

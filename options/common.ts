@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference path="../contracts.d.ts" />
 
 const presetNames = ["preset-1", "preset-2", "preset-3", "preset-4"] as const;
 

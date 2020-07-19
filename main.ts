@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference path="./contracts.d.ts" />
-
-const defaultSettings = {
+const defaultSettings: IPresets = {
   "preset-1": {
     width: 800,
     height: 600,
@@ -53,8 +51,8 @@ browser.storage.local.get("presets").then((result) => {
     return;
   }
 
-  browser.storage.local.set({ presets: JSON.stringify(defaultSettings) });
-});
+  browser.storage.local.set({ presets: JSON.stringify(defaultSettings) }).catch(() => { /* ignore */ });
+}, () => { /* ignore */ });
 
 // Handle user command
 function handleCommand(command: string) {
@@ -62,11 +60,11 @@ function handleCommand(command: string) {
     .then((x) => getNewState(command as PresetName, x))
     .then((newState) =>
       browser.windows.getCurrent()
-        .then((w) => updateWindow(w, newState)));
+        .then((w) => updateWindow(w, newState)), () => { /* ignore */ });
 }
 
 // Handle message from popup
-function handleMessage(message: any): void {
+function handleMessage(message: unknown): void {
   if (typeof message !== "string") {
     return;
   }
@@ -104,7 +102,7 @@ function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateIn
     return;
   }
 
-  browser.windows.update(window.id, newState);
+  browser.windows.update(window.id, newState).catch(() => { /* ignore */ });
 }
 
 browser.commands.onCommand.addListener(handleCommand);

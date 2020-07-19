@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Daniel Betz
+Copyright 2020 Daniel Betz
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,10 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-/// <reference path="../contracts.d.ts" />
-/// <reference path="../web-ext-types.d.ts" />
-/// <reference path="common.ts" />
 
 interface IKeyInfo {
   readonly key: string;
@@ -96,10 +92,14 @@ function decodeShortcut(shortcut: string | undefined): [string, string, string] 
 }
 
 function resetShortcut(cmdName: string) {
-  browser.commands.reset(cmdName).then(() => location.reload());
+  browser.commands.reset(cmdName).then(() => location.reload(), () => { /* ignore */ });
 }
 
 function saveShortcut(cmd: browser.commands.Command) {
+  if (!cmd.name) {
+    return;
+  }
+
   const key1Select = e<HTMLSelectElement>(cmd.name + "-key-1");
   const key2Select = e<HTMLSelectElement>(cmd.name + "-key-2");
   const key3Select = e<HTMLSelectElement>(cmd.name + "-key-3");
@@ -205,4 +205,4 @@ browser.commands.getAll().then((cmds) => {
 
     e<HTMLButtonElement>(cmd.name + "-key-reset").addEventListener("click", () => resetShortcut(cmdName));
   }
-});
+}, () => { /* ignore */ });

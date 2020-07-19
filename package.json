@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "tsc",
-    "lint": "tslint -c tslint.json *.ts browser_action/*.ts options/*.ts",
+    "lint": "eslint \"*.ts\" \"**/*.ts\"",
     "pack": "rm -f resizeit2.zip && cat files_to_zip.txt | zip -@ resizeit2.zip",
     "pack-source": "git archive -o resizeit2-source.zip HEAD"
   },
@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/fuzzykiller/resizeit2#readme",
   "devDependencies": {
-    "bootstrap": "~4.4.1",
-    "tslint": "~6.1.0",
-    "typescript": "~3.8.3",
+    "@typescript-eslint/eslint-plugin": "~3.6.1",
+    "@typescript-eslint/parser": "~3.6.1",
+    "bootstrap": "~4.5.0",
+    "eslint": "~7.5.0",
+    "eslint-plugin-jsdoc": "~30.0.0",
+    "eslint-plugin-prefer-arrow": "~1.2.1",
+    "typescript": "~3.9.7",
     "web-ext-types": "~3.2.1"
   }
 }
