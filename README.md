@@ -1,7 +1,5 @@
 # resizeit2
 
-[![Build Status](https://travis-ci.org/fuzzykiller/resizeit2.svg?branch=master)](https://travis-ci.org/fuzzykiller/resizeit2)
-
 A rewrite (from scratch) of the [ResizeIT Firefox extension](https://addons.mozilla.org/firefox/addon/resizeit/). It wasn’t available as a Web Extension in the past.
 
 I think it’s a great tool, especially with frequently changing monitor setups.
