@@ -14,21 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-async function getPresets(): Promise<IPresets> {
-  const result = await browser.storage.local.get(presetsKey);
+interface ISettings {
+  readonly presets: IPresets;
+  readonly handleNewWindows: boolean;
+}
+
+async function getSettings(): Promise<ISettings> {
+  const result = await browser.storage.local.get([presetsKey, handleNewWindowsKey]);
   const savedPresets = result[presetsKey];
   if (typeof savedPresets !== "string") {
     location.reload();
     throw new Error("Couldn't get presets");
   }
-  
-  return JSON.parse(savedPresets) as IPresets;
+
+  const presets = JSON.parse(savedPresets) as IPresets;
+  const handleNewWindows = !!result[handleNewWindowsKey];
+
+  return { presets, handleNewWindows };
 }
 
 function saveChanges(): void {
-  getPresets().then((presets) => {
+  getSettings().then((settings) => {
     for (const presetName of presetNames) {
-      const preset = presets[presetName];
+      const preset = settings.presets[presetName];
 
       let elem: HTMLInputElement;
       elem = e(presetName + "-width");
@@ -58,7 +66,19 @@ function saveChanges(): void {
       preset.restoreOnStart = e(presetName + "-startup").checked;
     }
 
-    return browser.storage.local.set({ [presetsKey]: JSON.stringify(presets) });
+    const haveStartupPreset = presetNames.some(presetName => settings.presets[presetName].restoreOnStart);
+    const handleNewWindows = haveStartupPreset && e("handle-new-windows").checked;
+    if (!haveStartupPreset) {
+      e("handle-new-windows").disabled = true;
+      e("handle-new-windows").checked = false;
+    } else {
+      e("handle-new-windows").disabled = false;
+    }
+
+    return browser.storage.local.set({
+      [presetsKey]: JSON.stringify(settings.presets),
+      [handleNewWindowsKey]: handleNewWindows
+    });
   }, () => { /* ignore */ });
 }
 
@@ -73,9 +93,9 @@ function insertCurrentSizeAndPosition(presetName: PresetName): void {
   }, () => { /* ignore */ });
 }
 
-getPresets().then((presets) => {
+getSettings().then((settings) => {
   for (const presetName of presetNames) {
-    const preset = presets[presetName];
+    const preset = settings.presets[presetName];
     e(presetName + "-width").valueAsNumber = preset.width;
     e(presetName + "-height").valueAsNumber = preset.height;
     e(presetName + "-pos").checked = preset.restorePosition;
@@ -90,11 +110,16 @@ getPresets().then((presets) => {
     e(presetName + "-pos").addEventListener("change", saveChanges);
     e(presetName + "-left").addEventListener("change", saveChanges);
     e(presetName + "-top").addEventListener("change", saveChanges);
-    e(presetName  + "-startup").addEventListener("change", saveChanges);
+    e(presetName + "-startup").addEventListener("change", saveChanges);
 
     e<HTMLButtonElement>(presetName + "-current")
       .addEventListener("click", () => insertCurrentSizeAndPosition(presetName));
   }
 
+  const haveStartupPreset = presetNames.some(presetName => settings.presets[presetName].restoreOnStart);
+  e("handle-new-windows").checked = haveStartupPreset && settings.handleNewWindows;
+  e("handle-new-windows").disabled = !haveStartupPreset;
+
   e("startup-none").addEventListener("change", saveChanges);
+  e("handle-new-windows").addEventListener("change", saveChanges);
 }, () => { /* ignore */ });
