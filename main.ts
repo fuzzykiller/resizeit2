@@ -65,6 +65,21 @@ function handleMessage(message: unknown): void {
   handleCommand(message);
 }
 
+// Handle new windows
+function handleWindowCreated(window: browser.windows.Window): void {
+  browser.storage.local.get([presetsKey, handleNewWindowsKey]).then((result) => {
+    const applyToNewWindows = result[handleNewWindowsKey] as boolean;
+    if (!applyToNewWindows) {
+      return undefined;
+    }
+
+    const presets = JSON.parse(result[presetsKey] as string) as IPresets;
+    const startupPreset = getStartupPreset(presets);
+    const newState = startupPreset ? getWindowUpdateInfo(startupPreset) : undefined;
+    return newState;
+  }).then(newState => updateWindow(window, newState), () => { /* ignore */ });
+}
+
 function getNewState(presetName: string, settings: browser.storage.StorageObject): IWindowUpdateInfo | undefined {
   if (!settings.presets) {
     return undefined;
@@ -126,6 +141,7 @@ async function init(): Promise<void> {
   browser.commands.onCommand.addListener(handleCommand);
   browser.runtime.onMessage.addListener(handleMessage);
   browser.runtime.onUpdateAvailable.addListener(handleUpdate);
+  browser.windows.onCreated.addListener(handleWindowCreated);
 
   const result = await browser.storage.local.get([presetsKey, updatingKey]);
   let savedPresets = result[presetsKey];

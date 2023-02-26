@@ -18,6 +18,7 @@ limitations under the License.
 
 const presetNames = ["preset-1", "preset-2", "preset-3", "preset-4"] as const;
 const presetsKey = "presets";
+const handleNewWindowsKey = "handleNewWindows";
 
 function e<TElement extends HTMLElement = HTMLInputElement>(id: string) {
   return document.getElementById(id) as TElement;
