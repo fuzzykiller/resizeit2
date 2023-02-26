@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-async function getPresets() {
+async function getPresets(): Promise<IPresets> {
   const result = await browser.storage.local.get(presetsKey);
   const savedPresets = result[presetsKey];
   if (typeof savedPresets !== "string") {
@@ -25,7 +25,7 @@ async function getPresets() {
   return JSON.parse(savedPresets) as IPresets;
 }
 
-function saveChanges() {
+function saveChanges(): void {
   getPresets().then((presets) => {
     for (const presetName of presetNames) {
       const preset = presets[presetName];
@@ -62,12 +62,12 @@ function saveChanges() {
   }, () => { /* ignore */ });
 }
 
-function insertCurrentSizeAndPosition(presetName: PresetName) {
+function insertCurrentSizeAndPosition(presetName: PresetName): void {
   browser.windows.getCurrent().then((currentWindow) => {
-    e(presetName + "-width").valueAsNumber = currentWindow.width || 1024;
-    e(presetName + "-height").valueAsNumber = currentWindow.height || 768;
-    e(presetName + "-left").valueAsNumber = currentWindow.left || 0;
-    e(presetName + "-top").valueAsNumber = currentWindow.top || 0;
+    e(presetName + "-width").valueAsNumber = currentWindow.width ?? 1024;
+    e(presetName + "-height").valueAsNumber = currentWindow.height ?? 768;
+    e(presetName + "-left").valueAsNumber = currentWindow.left ?? 0;
+    e(presetName + "-top").valueAsNumber = currentWindow.top ?? 0;
 
     saveChanges();
   }, () => { /* ignore */ });

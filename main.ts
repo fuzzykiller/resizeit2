@@ -48,7 +48,7 @@ const defaultSettings: IPresets = {
 };
 
 // Handle user command
-function handleCommand(command: string) {
+function handleCommand(command: string): void {
   browser.storage.local.get(presetsKey)
     .then((x) => getNewState(command, x))
     .then((newState) =>
@@ -65,7 +65,7 @@ function handleMessage(message: unknown): void {
   handleCommand(message);
 }
 
-function getNewState(presetName: string, settings: browser.storage.StorageObject) {
+function getNewState(presetName: string, settings: browser.storage.StorageObject): IWindowUpdateInfo | undefined {
   if (!settings.presets) {
     return undefined;
   }
@@ -82,7 +82,7 @@ function getNewState(presetName: string, settings: browser.storage.StorageObject
   return newState;
 }
 
-function getWindowUpdateInfo(preset: IPreset) {
+function getWindowUpdateInfo(preset: IPreset): IWindowUpdateInfo {
   const newState: IWindowUpdateInfo = {
     width: preset.width,
     height: preset.height,
@@ -96,7 +96,7 @@ function getWindowUpdateInfo(preset: IPreset) {
   return newState;
 }
 
-function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateInfo) {
+function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateInfo): void {
   if (!window.id || !newState) {
     return;
   }
@@ -104,13 +104,13 @@ function updateWindow(window: browser.windows.Window, newState?: IWindowUpdateIn
   browser.windows.update(window.id, newState).catch(() => { /* ignore */ });
 }
 
-function handleUpdate() {
-  browser.storage.local.set({ updating: true }).then(() => {
+function handleUpdate(): void {
+  browser.storage.local.set({ [updatingKey]: true }).then(() => {
     browser.runtime.reload();
   }).catch(() => { /* ignore */ });
 }
 
-function getStartupPreset(presets: IPresets) {
+function getStartupPreset(presets: IPresets): IPreset | undefined {
   for (const presetName of presetNames) {
     const preset = presets[presetName];
     if (preset.restoreOnStart) {
@@ -118,11 +118,11 @@ function getStartupPreset(presets: IPresets) {
     }
   }
 
-  return;
+  return undefined;
 }
 
 // Initialize
-async function init() {
+async function init(): Promise<void> {
   browser.commands.onCommand.addListener(handleCommand);
   browser.runtime.onMessage.addListener(handleMessage);
   browser.runtime.onUpdateAvailable.addListener(handleUpdate);
