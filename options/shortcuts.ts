@@ -20,23 +20,23 @@ interface IKeyInfo {
 }
 
 function k(key: string, name?: string): IKeyInfo {
-  return { key, name: name || key };
+  return { key, name: name ?? key };
 }
 
-const isMac = navigator.platform.indexOf("Mac") !== -1;
-const key1Values: ReadonlyArray<IKeyInfo> = isMac
+const isMac = navigator.platform.includes("Mac");
+const key1Values: readonly IKeyInfo[] = isMac
   ? [k("MacCtrl", "ctrl"), k("Alt", "alt"), k("Ctrl", "cmd")]
   : [k("Ctrl"), k("Alt")];
 
-const key2Values: ReadonlyArray<IKeyInfo> = [...key1Values, k("Shift", isMac ? "shift" : "Shift")];
-const key3FunctionValues: ReadonlyArray<IKeyInfo> = [
+const key2Values: readonly IKeyInfo[] = [...key1Values, k("Shift", isMac ? "shift" : "Shift")];
+const key3FunctionValues: readonly IKeyInfo[] = [
   k("F1"), k("F2"), k("F3"),
   k("F4"), k("F5"), k("F6"),
   k("F7"), k("F8"), k("F9"),
   k("F10"), k("F11"), k("F12"),
 ];
 
-const key3Values: ReadonlyArray<IKeyInfo> = [
+const key3Values: readonly IKeyInfo[] = [
   k("A"), k("B"), k("C"),
   k("D"), k("E"), k("F"),
   k("G"), k("H"), k("I"),
@@ -135,7 +135,7 @@ function clearOptions(e: HTMLSelectElement) {
   e.options.add(emptyOption);
 }
 
-function addOptions(e: HTMLSelectElement, keyInfos: ReadonlyArray<IKeyInfo>) {
+function addOptions(e: HTMLSelectElement, keyInfos: readonly IKeyInfo[]) {
   for (const keyInfo of keyInfos) {
     const option = document.createElement("option");
     option.value = keyInfo.key;
