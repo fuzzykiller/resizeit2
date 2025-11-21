@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fuzzykiller/resizeit2.git"
+    "url": "git+https://github.com/btzdnl/resizeit2.git"
   },
   "author": "Daniel Betz",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/fuzzykiller/resizeit2/issues"
+    "url": "https://github.com/btzdnl/resizeit2/issues"
   },
-  "homepage": "https://github.com/fuzzykiller/resizeit2#readme",
+  "homepage": "https://github.com/btzdnl/resizeit2#readme",
   "devDependencies": {
     "@eslint/js": "~9.39.1",
     "bootstrap": "~4.6.2",
